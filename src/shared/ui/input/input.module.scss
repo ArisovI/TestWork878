@@ -1,0 +1,17 @@
+.error {
+  color: #dc3545;
+  font-size: 14px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  input{
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+}
