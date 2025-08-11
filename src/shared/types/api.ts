@@ -9,7 +9,8 @@ export interface User {
 }
 
 export interface LoginResponse extends User {
-  token: string
+  accessToken: string
+  refreshToken: string
 }
 
 export interface Product {
