@@ -12,7 +12,6 @@ interface AuthState {
   error: string | null
   login: (username: string, password: string) => Promise<void>
   logout: () => void
-  clearError: () => void
   getMe: () => void
 }
 
@@ -52,18 +51,14 @@ export const useAuthStore = create<AuthState>()((set) => ({
       })
     }
   },
-
   logout: () => {
     Cookies.remove(COOKIE_TOKEN.ACCESS)
+    Cookies.remove(COOKIE_TOKEN.REFRESH)
     set({
       user: null,
       isAuthenticated: false,
       error: null,
     })
-  },
-
-  clearError: () => {
-    set({ error: null })
   },
 
   getMe: async () => {

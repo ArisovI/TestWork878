@@ -1,24 +1,16 @@
-'use client'
 import { Footer, Header } from '@/components'
 import { Inter } from 'next/font/google'
+import { Metadata } from 'next'
 import './globals.css'
-import { useEffect } from 'react'
-import { useAuthStore } from '@/shared/store/auth-store'
-import Cookies from 'js-cookie'
-import { COOKIE_TOKEN } from '@/shared/http/cookie'
 
 const inter = Inter({ subsets: ['latin'] })
 
+export const metadata: Metadata = {
+  title: 'Abeloshop Store',
+  description: 'Abeloshop is a modern e-commerce platform',
+}
+
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const getMe = useAuthStore((state) => state.getMe)
-
-  useEffect(() => {
-    const token = Cookies.get(COOKIE_TOKEN.ACCESS)
-    if (token) {
-      getMe()
-    }
-  }, [getMe])
-
   return (
     <html lang="en">
       <body className={inter.className}>

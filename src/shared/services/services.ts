@@ -7,15 +7,21 @@ import { COOKIE_TOKEN } from '../http/cookie'
 export const authApi = {
   login: async (username: string, password: string): Promise<LoginResponse> => {
     try {
-      const res = await http.post('/auth/login', {
+      const { data } = await http.post('/auth/login', {
         username,
         password,
         expiresInMins: 30,
       })
-      const { accessToken, refreshToken, ...user } = res.data
+      const { accessToken, refreshToken, ...user } = data
 
-      Cookies.set(COOKIE_TOKEN.ACCESS, accessToken, { expires: 1 / 24, path: '/' })
-      Cookies.set(COOKIE_TOKEN.REFRESH, refreshToken, { expires: 90, path: '/' })
+      Cookies.set(COOKIE_TOKEN.ACCESS, accessToken, {
+        expires: 1 / 24,
+        path: '/',
+      })
+      Cookies.set(COOKIE_TOKEN.REFRESH, refreshToken, {
+        expires: 90,
+        path: '/',
+      })
 
       return {
         ...user,
@@ -34,10 +40,10 @@ export const authApi = {
 export const productsApi = {
   getProducts: async (limit = 12): Promise<Product[]> => {
     try {
-      const response = await http.get<ProductsResponse>('/products', {
+      const { data } = await http<ProductsResponse>('/products', {
         params: { limit },
       })
-      return response.data.products
+      return data.products
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
